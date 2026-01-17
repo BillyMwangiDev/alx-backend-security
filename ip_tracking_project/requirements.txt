@@ -1,0 +1,16 @@
+# Django and core dependencies
+# Django 5.0+ required for Python 3.14+ support (cgi module removed in Python 3.13+)
+Django>=5.0,<6.0
+django-ipware>=5.0.0
+django-ratelimit>=4.1.0
+
+# Task queue and caching
+celery>=5.2.0
+redis>=4.5.0
+
+# IP Geolocation - using geoip2 (MaxMind) instead of non-existent django-ipgeolocation
+geoip2>=4.7.0
+maxminddb>=2.6.0
+
+# Optional: Free GeoLite2 database downloader (uses date-based versioning)
+maxminddb-geolite2>=2018.703
