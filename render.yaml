@@ -5,7 +5,7 @@ services:
     runtime: python
     plan: free
     buildCommand: "cd ip_tracking_project && chmod +x build.sh && ./build.sh"
-    startCommand: "cd ip_tracking_project && gunicorn ip_tracking_project.wsgi:application"
+    startCommand: "cd ip_tracking_project && python manage.py migrate --no-input && gunicorn ip_tracking_project.wsgi:application"
     envVars:
       - key: PYTHON_VERSION
         value: 3.11.0
