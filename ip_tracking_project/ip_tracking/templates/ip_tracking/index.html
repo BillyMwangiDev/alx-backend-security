@@ -4,7 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IP Tracking & Security System</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- Google Fonts - Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
     <style>
+        :root {
+            --dark-bg: #0B1F30;
+            --bg: #15293A;
+            --popup: #214055;
+            --dark-gray: #466E8A;
+            --gray-sky: #658CA7;
+            --light-gray: #9FBBCD;
+            --green: #29BD98;
+            --blue: #2497F9;
+            --teal: #147B9D;
+        }
+        
         * {
             margin: 0;
             padding: 0;
@@ -12,231 +32,388 @@
         }
         
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Poppins', sans-serif;
+            background: var(--dark-bg);
             min-height: 100vh;
-            padding: 20px;
+            color: var(--light-gray);
         }
         
-        .container {
-            max-width: 1200px;
+        .main-container {
+            padding: 30px 20px;
+            max-width: 1400px;
             margin: 0 auto;
         }
         
-        .header {
-            background: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        .header-card {
+            background: var(--bg);
+            border: 1px solid var(--popup);
+            border-radius: 16px;
+            padding: 40px;
             margin-bottom: 30px;
-            text-align: center;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
         }
         
-        .header h1 {
-            color: #667eea;
-            margin-bottom: 10px;
+        .header-card h1 {
+            background: linear-gradient(135deg, var(--teal) 0%, var(--green) 50%, var(--blue) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 700;
+            font-size: 2.5rem;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
         }
         
-        .header p {
-            color: #666;
-            font-size: 18px;
+        .header-card h1 i {
+            -webkit-text-fill-color: var(--green);
         }
         
-        .stats {
+        .header-card p {
+            color: var(--gray-sky);
+            font-size: 1.1rem;
+            font-weight: 400;
+        }
+        
+        .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
             margin-bottom: 30px;
         }
         
         .stat-card {
-            background: white;
-            padding: 25px;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            text-align: center;
+            background: var(--bg);
+            border: 1px solid var(--popup);
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 32px rgba(41, 189, 152, 0.2);
+        }
+        
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--teal), var(--green));
+        }
+        
+        .stat-card i {
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, var(--teal), var(--green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 15px;
         }
         
         .stat-card h3 {
-            color: #667eea;
-            font-size: 36px;
-            margin-bottom: 10px;
+            color: #FFFFFF;
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 8px;
         }
         
         .stat-card p {
-            color: #666;
-            font-size: 14px;
+            color: var(--gray-sky);
+            font-size: 0.95rem;
+            font-weight: 500;
+            margin: 0;
         }
         
-        .links {
-            background: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        .links-card {
+            background: var(--bg);
+            border: 1px solid var(--popup);
+            border-radius: 16px;
+            padding: 35px;
             margin-bottom: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
         }
         
-        .links h2 {
-            color: #333;
-            margin-bottom: 20px;
+        .links-card h2 {
+            color: #FFFFFF;
+            font-weight: 600;
+            margin-bottom: 25px;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .links-card h2 i {
+            color: var(--green);
         }
         
         .link-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 16px;
         }
         
         .link-btn {
-            display: block;
-            padding: 15px 25px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 16px 24px;
+            background: linear-gradient(135deg, var(--teal), var(--green));
+            color: #FFFFFF;
             text-decoration: none;
-            border-radius: 8px;
-            text-align: center;
-            transition: transform 0.2s, box-shadow 0.2s;
+            border-radius: 12px;
+            transition: all 0.3s;
             font-weight: 500;
+            font-size: 0.95rem;
+            box-shadow: 0 4px 12px rgba(20, 123, 157, 0.3);
         }
         
         .link-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(41, 189, 152, 0.4);
+            background: linear-gradient(135deg, var(--green), var(--blue));
+            color: #FFFFFF;
         }
         
-        .requests-table {
-            background: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        .link-btn i {
+            font-size: 1.2rem;
+        }
+        
+        .table-card {
+            background: var(--bg);
+            border: 1px solid var(--popup);
+            border-radius: 16px;
+            padding: 35px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
             overflow-x: auto;
         }
         
-        .requests-table h2 {
-            color: #333;
-            margin-bottom: 20px;
-        }
-        
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        
-        th, td {
-            padding: 12px;
-            text-align: left;
-            border-bottom: 1px solid #eee;
-        }
-        
-        th {
-            background: #f8f9fa;
-            color: #667eea;
+        .table-card h2 {
+            color: #FFFFFF;
             font-weight: 600;
+            margin-bottom: 25px;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
         
-        tr:hover {
-            background: #f8f9fa;
+        .table-card h2 i {
+            color: var(--blue);
+        }
+        
+        .custom-table {
+            width: 100%;
+            margin: 0;
+        }
+        
+        .custom-table thead th {
+            background: var(--popup);
+            color: var(--green);
+            border: none;
+            padding: 16px;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
+        }
+        
+        .custom-table tbody tr {
+            background: transparent;
+            border-bottom: 1px solid var(--popup);
+            transition: background 0.2s;
+        }
+        
+        .custom-table tbody tr:hover {
+            background: var(--popup);
+        }
+        
+        .custom-table tbody td {
+            color: var(--light-gray);
+            padding: 14px 16px;
+            border: none;
+            vertical-align: middle;
+        }
+        
+        .custom-table code {
+            background: var(--popup);
+            color: var(--green);
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
         }
         
         .badge {
-            display: inline-block;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 12px;
-            font-weight: 500;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
         
-        .badge-success {
-            background: #d4edda;
-            color: #155724;
+        .badge-get {
+            background: rgba(41, 189, 152, 0.2);
+            color: var(--green);
+            border: 1px solid var(--green);
         }
         
-        .badge-warning {
-            background: #fff3cd;
-            color: #856404;
+        .badge-post {
+            background: rgba(36, 151, 249, 0.2);
+            color: var(--blue);
+            border: 1px solid var(--blue);
         }
         
-        .badge-danger {
-            background: #f8d7da;
-            color: #721c24;
+        .badge-other {
+            background: rgba(101, 140, 167, 0.2);
+            color: var(--gray-sky);
+            border: 1px solid var(--gray-sky);
+        }
+        
+        .no-data {
+            text-align: center;
+            color: var(--gray-sky);
+            padding: 60px 20px;
+            font-size: 1.1rem;
+        }
+        
+        .no-data i {
+            font-size: 3rem;
+            color: var(--dark-gray);
+            margin-bottom: 15px;
+        }
+        
+        @media (max-width: 768px) {
+            .header-card h1 {
+                font-size: 1.8rem;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .link-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>🛡️ IP Tracking & Security System</h1>
+    <div class="main-container">
+        <!-- Header -->
+        <div class="header-card">
+            <h1>
+                <i class="bi bi-shield-lock-fill"></i>
+                IP Tracking & Security System
+            </h1>
             <p>Enterprise-grade IP tracking, geolocation, and anomaly detection</p>
         </div>
         
-        <div class="stats">
+        <!-- Stats Cards -->
+        <div class="stats-grid">
             <div class="stat-card">
+                <i class="bi bi-graph-up-arrow"></i>
                 <h3>{{ total_requests }}</h3>
                 <p>Total Requests Tracked</p>
             </div>
             <div class="stat-card">
-                <h3>🌍</h3>
+                <i class="bi bi-geo-alt-fill"></i>
+                <h3><i class="bi bi-globe"></i></h3>
                 <p>Geolocation Enabled</p>
             </div>
             <div class="stat-card">
-                <h3>🚀</h3>
+                <i class="bi bi-lightning-charge-fill"></i>
+                <h3><i class="bi bi-check-circle-fill"></i></h3>
                 <p>System Active</p>
             </div>
         </div>
         
-        <div class="links">
-            <h2>📚 Quick Links</h2>
+        <!-- Quick Links -->
+        <div class="links-card">
+            <h2><i class="bi bi-link-45deg"></i> Quick Links</h2>
             <div class="link-grid">
-                <a href="/swagger/" class="link-btn">📖 API Documentation (Swagger)</a>
-                <a href="/redoc/" class="link-btn">📘 API Docs (ReDoc)</a>
-                <a href="/admin/" class="link-btn">⚙️ Admin Panel</a>
-                <a href="/api/v1/logs/stats/" class="link-btn">📊 Analytics</a>
+                <a href="/swagger/" class="link-btn">
+                    <i class="bi bi-book"></i>
+                    API Documentation (Swagger)
+                </a>
+                <a href="/redoc/" class="link-btn">
+                    <i class="bi bi-journal-code"></i>
+                    API Docs (ReDoc)
+                </a>
+                <a href="/admin/" class="link-btn">
+                    <i class="bi bi-gear-fill"></i>
+                    Admin Panel
+                </a>
+                <a href="/api/v1/logs/stats/" class="link-btn">
+                    <i class="bi bi-bar-chart-line-fill"></i>
+                    Analytics
+                </a>
             </div>
         </div>
         
-        <div class="requests-table">
-            <h2>🕐 Recent Requests (Last 50)</h2>
+        <!-- Recent Requests Table -->
+        <div class="table-card">
+            <h2><i class="bi bi-clock-history"></i> Recent Requests (Last 50)</h2>
             {% if requests %}
-            <table>
-                <thead>
-                    <tr>
-                        <th>IP Address</th>
-                        <th>Location</th>
-                        <th>Path</th>
-                        <th>Method</th>
-                        <th>Timestamp</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for req in requests %}
-                    <tr>
-                        <td><code>{{ req.ip_address }}</code></td>
-                        <td>
-                            {% if req.city %}
-                                {{ req.city }}, {{ req.country }}
-                            {% else %}
-                                Unknown
-                            {% endif %}
-                        </td>
-                        <td>{{ req.path }}</td>
-                        <td>
-                            {% if req.method == "GET" %}
-                                <span class="badge badge-success">{{ req.method }}</span>
-                            {% elif req.method == "POST" %}
-                                <span class="badge badge-warning">{{ req.method }}</span>
-                            {% else %}
-                                <span class="badge badge-danger">{{ req.method }}</span>
-                            {% endif %}
-                        </td>
-                        <td>{{ req.timestamp|date:"Y-m-d H:i:s" }}</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+            <div class="table-responsive">
+                <table class="table custom-table">
+                    <thead>
+                        <tr>
+                            <th><i class="bi bi-hdd-network"></i> IP Address</th>
+                            <th><i class="bi bi-geo"></i> Location</th>
+                            <th><i class="bi bi-signpost"></i> Path</th>
+                            <th><i class="bi bi-code-slash"></i> Method</th>
+                            <th><i class="bi bi-calendar3"></i> Timestamp</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for req in requests %}
+                        <tr>
+                            <td><code>{{ req.ip_address }}</code></td>
+                            <td>
+                                {% if req.city %}
+                                    <i class="bi bi-pin-map-fill"></i> {{ req.city }}, {{ req.country }}
+                                {% else %}
+                                    <i class="bi bi-question-circle"></i> Unknown
+                                {% endif %}
+                            </td>
+                            <td>{{ req.path }}</td>
+                            <td>
+                                {% if req.method == "GET" %}
+                                    <span class="badge badge-get">{{ req.method }}</span>
+                                {% elif req.method == "POST" %}
+                                    <span class="badge badge-post">{{ req.method }}</span>
+                                {% else %}
+                                    <span class="badge badge-other">{{ req.method }}</span>
+                                {% endif %}
+                            </td>
+                            <td>{{ req.timestamp|date:"Y-m-d H:i:s" }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
             {% else %}
-            <p style="text-align: center; color: #666; padding: 20px;">No requests tracked yet. Start making API calls!</p>
+            <div class="no-data">
+                <div>
+                    <i class="bi bi-inbox"></i>
+                </div>
+                <p>No requests tracked yet. Start making API calls!</p>
+            </div>
             {% endif %}
         </div>
     </div>
+    
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
