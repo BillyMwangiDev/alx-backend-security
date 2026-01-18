@@ -6,7 +6,7 @@ services:
     region: frankfurt
     plan: free
     buildCommand: "pip install -r ip_tracking_project/requirements.txt && python ip_tracking_project/manage.py collectstatic --no-input"
-    startCommand: "python ip_tracking_project/manage.py migrate --no-input && gunicorn --chdir ip_tracking_project wsgi:application"
+    startCommand: "bash start.sh"
     envVars:
       - key: PYTHON_VERSION
         value: 3.11.0
