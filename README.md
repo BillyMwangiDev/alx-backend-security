@@ -447,18 +447,19 @@ This application is ready for one-click deployment to Render:
 
 [![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com)
 
-**Quick Deploy:**
+**Quick Deploy (5 minutes):**
 1. Fork this repository
 2. Create account on [Render](https://render.com)
 3. Connect your GitHub repository
 4. Render will auto-detect `render.yaml` and deploy:
    - Web service (Django)
    - PostgreSQL database
-   - Redis instance
-   - Celery worker
-   - Celery beat scheduler
 
-**Complete Guide:** See [DEPLOYMENT_GUIDE.md](DEPLOYMENT_GUIDE.md)
+**Note:** App works without Redis initially. Add Redis later for caching and background tasks.
+
+**Complete Guides:**
+- [DEPLOYMENT_GUIDE.md](DEPLOYMENT_GUIDE.md) - Full deployment steps
+- [REDIS_SETUP.md](REDIS_SETUP.md) - Add Redis for caching (optional)
 
 ### Swagger API Documentation
 
