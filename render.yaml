@@ -69,15 +69,16 @@ services:
       - key: SECRET_KEY
         sync: false
 
+  # Redis Key Value Store
+  - type: redis
+    name: ip-tracking-redis
+    plan: free
+    maxmemoryPolicy: allkeys-lru
+    ipAllowList: []
+
 databases:
   # PostgreSQL Database
   - name: ip-tracking-db
     plan: free
     databaseName: ip_tracking_db
     user: ip_tracking_user
-  
-  # Redis Key Value Store
-  - name: ip-tracking-redis
-    plan: free
-    maxmemoryPolicy: allkeys-lru
-    ipAllowList: []
