@@ -8,7 +8,7 @@ import os
 from celery import Celery
 
 # Set the default Django settings module for the 'celery' program.
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'ip_tracking_project.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'settings')
 
 # Create the Celery app instance
 app = Celery('ip_tracking_project')
