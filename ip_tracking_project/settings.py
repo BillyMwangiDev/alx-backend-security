@@ -155,6 +155,19 @@ if REDIS_URL:
     CELERY_TASK_SERIALIZER = 'json'
     CELERY_RESULT_SERIALIZER = 'json'
     CELERY_TIMEZONE = 'UTC'
+    
+    # Celery Beat Schedule (for periodic tasks)
+    try:
+        from celery.schedules import crontab
+        CELERY_BEAT_SCHEDULE = {
+            'detect-anomalies-hourly': {
+                'task': 'ip_tracking.tasks.detect_anomalies',
+                'schedule': crontab(minute=0),  # Run every hour
+            },
+        }
+    except ImportError:
+        # Celery not available, skip beat schedule
+        CELERY_BEAT_SCHEDULE = {}
 else:
     # Use database as broker for development (slower but works without Redis)
     CELERY_BROKER_URL = 'django://'
@@ -163,16 +176,7 @@ else:
     CELERY_TASK_SERIALIZER = 'json'
     CELERY_RESULT_SERIALIZER = 'json'
     CELERY_TIMEZONE = 'UTC'
-
-# Celery Beat Schedule (for periodic tasks)
-from celery.schedules import crontab
-
-CELERY_BEAT_SCHEDULE = {
-    'detect-anomalies-hourly': {
-        'task': 'ip_tracking.tasks.detect_anomalies',
-        'schedule': crontab(minute=0),  # Run every hour
-    },
-}
+    CELERY_BEAT_SCHEDULE = {}
 
 # REST Framework Configuration
 REST_FRAMEWORK = {

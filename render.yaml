@@ -21,9 +21,9 @@ services:
       - key: SECRET_KEY
         generateValue: true
       - key: DEBUG
-        value: False
+        value: "False"
       - key: ALLOWED_HOSTS
-        sync: false
+        value: ".onrender.com"
 
   # Celery Worker - Background Tasks
   # NOTE: Worker services require paid plan ($7/month per worker)
