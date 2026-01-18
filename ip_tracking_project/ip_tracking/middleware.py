@@ -23,10 +23,14 @@ class IPLoggingMiddleware(MiddlewareMixin):
         if not client_ip:
             return None
         
-        # Task 1: Check if IP is blocked
-        if BlockedIP.objects.filter(ip_address=client_ip).exists():
-            logger.warning(f"Blocked IP attempted access: {client_ip}")
-            return HttpResponseForbidden("Access denied. Your IP has been blocked.")
+        # Task 1: Check if IP is blocked (with error handling for missing tables)
+        try:
+            if BlockedIP.objects.filter(ip_address=client_ip).exists():
+                logger.warning(f"Blocked IP attempted access: {client_ip}")
+                return HttpResponseForbidden("Access denied. Your IP has been blocked.")
+        except Exception as e:
+            # If database tables don't exist yet, just log and continue
+            logger.debug(f"Could not check blocked IPs: {e}")
         
         # Task 2: Get geolocation data with caching (24 hours)
         country, city = self._get_geolocation(client_ip)
