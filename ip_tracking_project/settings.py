@@ -49,7 +49,7 @@ MIDDLEWARE = [
     'ip_tracking.middleware.IPLoggingMiddleware',
 ]
 
-ROOT_URLCONF = 'ip_tracking_project.urls'
+ROOT_URLCONF = 'urls'
 
 TEMPLATES = [
     {
@@ -67,7 +67,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'ip_tracking_project.wsgi.application'
+WSGI_APPLICATION = 'wsgi.application'
 
 # Database
 # Use PostgreSQL in production, SQLite in development
