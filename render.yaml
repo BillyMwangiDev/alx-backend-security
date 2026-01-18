@@ -4,8 +4,8 @@ services:
     name: ip-tracking-web
     runtime: python
     plan: free
-    buildCommand: "./build.sh"
-    startCommand: "gunicorn ip_tracking_project.wsgi:application"
+    buildCommand: "cd ip_tracking_project && chmod +x build.sh && ./build.sh"
+    startCommand: "cd ip_tracking_project && gunicorn ip_tracking_project.wsgi:application"
     envVars:
       - key: PYTHON_VERSION
         value: 3.11.0
@@ -14,7 +14,10 @@ services:
           name: ip-tracking-db
           property: connectionString
       - key: REDIS_URL
-        sync: false
+        fromService:
+          type: redis
+          name: ip-tracking-redis
+          property: connectionString
       - key: SECRET_KEY
         generateValue: true
       - key: DEBUG
@@ -22,48 +25,59 @@ services:
       - key: ALLOWED_HOSTS
         sync: false
 
-  # Celery Worker (Optional - requires Redis)
-  # Uncomment after setting up Upstash Redis
-  # - type: worker
-  #   name: ip-tracking-celery-worker
-  #   runtime: python
-  #   plan: free
-  #   buildCommand: "./build.sh"
-  #   startCommand: "celery -A ip_tracking_project worker -l info"
-  #   envVars:
-  #     - key: PYTHON_VERSION
-  #       value: 3.11.0
-  #     - key: DATABASE_URL
-  #       fromDatabase:
-  #         name: ip-tracking-db
-  #         property: connectionString
-  #     - key: REDIS_URL
-  #       sync: false
-  #     - key: SECRET_KEY
-  #       sync: false
+  # Celery Worker - Background Tasks
+  - type: worker
+    name: ip-tracking-celery-worker
+    runtime: python
+    plan: free
+    buildCommand: "cd ip_tracking_project && chmod +x build.sh && ./build.sh"
+    startCommand: "cd ip_tracking_project && celery -A ip_tracking_project worker -l info"
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.0
+      - key: DATABASE_URL
+        fromDatabase:
+          name: ip-tracking-db
+          property: connectionString
+      - key: REDIS_URL
+        fromService:
+          type: redis
+          name: ip-tracking-redis
+          property: connectionString
+      - key: SECRET_KEY
+        sync: false
 
-  # Celery Beat Scheduler (Optional - requires Redis)
-  # Uncomment after setting up Upstash Redis
-  # - type: worker
-  #   name: ip-tracking-celery-beat
-  #   runtime: python
-  #   plan: free
-  #   buildCommand: "./build.sh"
-  #   startCommand: "celery -A ip_tracking_project beat -l info"
-  #   envVars:
-  #     - key: PYTHON_VERSION
-  #       value: 3.11.0
-  #     - key: DATABASE_URL
-  #       fromDatabase:
-  #         name: ip-tracking-db
-  #         property: connectionString
-  #     - key: REDIS_URL
-  #       sync: false
-  #     - key: SECRET_KEY
-  #       sync: false
+  # Celery Beat Scheduler - Periodic Tasks
+  - type: worker
+    name: ip-tracking-celery-beat
+    runtime: python
+    plan: free
+    buildCommand: "cd ip_tracking_project && chmod +x build.sh && ./build.sh"
+    startCommand: "cd ip_tracking_project && celery -A ip_tracking_project beat -l info"
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.0
+      - key: DATABASE_URL
+        fromDatabase:
+          name: ip-tracking-db
+          property: connectionString
+      - key: REDIS_URL
+        fromService:
+          type: redis
+          name: ip-tracking-redis
+          property: connectionString
+      - key: SECRET_KEY
+        sync: false
 
 databases:
+  # PostgreSQL Database
   - name: ip-tracking-db
     plan: free
     databaseName: ip_tracking_db
     user: ip_tracking_user
+  
+  # Redis Key Value Store
+  - name: ip-tracking-redis
+    plan: free
+    maxmemoryPolicy: allkeys-lru
+    ipAllowList: []

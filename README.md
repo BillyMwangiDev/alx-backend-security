@@ -443,7 +443,7 @@ locust -f locustfile.py --host=http://localhost:8000
 
 ### Render Deployment (Recommended)
 
-This application is ready for one-click deployment to Render:
+This application is ready for one-click deployment to Render with **FREE Redis included**:
 
 [![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com)
 
@@ -454,12 +454,16 @@ This application is ready for one-click deployment to Render:
 4. Render will auto-detect `render.yaml` and deploy:
    - Web service (Django)
    - PostgreSQL database
+   - Redis Key Value (FREE tier)
+   - Celery workers for background tasks
+   - Celery beat for scheduled tasks
 
-**Note:** App works without Redis initially. Add Redis later for caching and background tasks.
+**All features work on FREE tier!** Includes caching, rate limiting, and anomaly detection.
 
 **Complete Guides:**
+- [RENDER_REDIS_GUIDE.md](RENDER_REDIS_GUIDE.md) - Render's built-in Redis (recommended)
 - [DEPLOYMENT_GUIDE.md](DEPLOYMENT_GUIDE.md) - Full deployment steps
-- [REDIS_SETUP.md](REDIS_SETUP.md) - Add Redis for caching (optional)
+- [REDIS_SETUP.md](REDIS_SETUP.md) - Alternative external Redis options
 
 ### Swagger API Documentation
 
