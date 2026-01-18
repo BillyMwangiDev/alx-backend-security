@@ -1,5 +1,7 @@
 """
 Django settings for ip_tracking_project project.
+
+For production deployment on Render.com
 """
 import os
 import dj_database_url
