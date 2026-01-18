@@ -31,4 +31,3 @@ class SuspiciousIPAdmin(admin.ModelAdmin):
         self.message_user(request, f"{queryset.count()} IPs have been blocked.")
     
     block_selected_ips.short_description = "Block selected suspicious IPs"
-```
