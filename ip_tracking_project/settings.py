@@ -101,3 +101,8 @@ CACHES = {
         'LOCATION': os.environ.get('REDIS_URL', 'redis://127.0.0.1:6379/1'),
     },
 }
+
+# Rate limiting configuration
+RATELIMIT_ENABLE= True
+RATELIMIT_USE_CACHE = 'default'
+RATELIMIT_VIEW = 'ip_tracking.views.ratelimit_error'
