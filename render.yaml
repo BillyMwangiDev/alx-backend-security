@@ -4,8 +4,8 @@ services:
     name: ip-tracking-web
     runtime: python
     plan: free
-    buildCommand: "cd ip_tracking_project && chmod +x build.sh && ./build.sh"
-    startCommand: "cd ip_tracking_project && python manage.py migrate --no-input && gunicorn ip_tracking_project.wsgi:application"
+    buildCommand: "pip install -r ip_tracking_project/requirements.txt && cd ip_tracking_project && python manage.py collectstatic --no-input"
+    startCommand: "cd ip_tracking_project && gunicorn wsgi:application"
     envVars:
       - key: PYTHON_VERSION
         value: 3.11.0
