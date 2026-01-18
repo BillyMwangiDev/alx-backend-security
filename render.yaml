@@ -45,7 +45,10 @@ services:
           name: ip-tracking-redis
           property: connectionString
       - key: SECRET_KEY
-        sync: false
+        fromService:
+          type: web
+          name: ip-tracking-web
+          envVarKey: SECRET_KEY
 
   # Celery Beat Scheduler - Periodic Tasks
   - type: worker
@@ -67,7 +70,10 @@ services:
           name: ip-tracking-redis
           property: connectionString
       - key: SECRET_KEY
-        sync: false
+        fromService:
+          type: web
+          name: ip-tracking-web
+          envVarKey: SECRET_KEY
 
   # Redis Key Value Store
   - type: redis
