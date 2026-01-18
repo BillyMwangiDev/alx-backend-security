@@ -441,6 +441,33 @@ locust -f locustfile.py --host=http://localhost:8000
 
 ## Production Deployment
 
+### Render Deployment (Recommended)
+
+This application is ready for one-click deployment to Render:
+
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com)
+
+**Quick Deploy:**
+1. Fork this repository
+2. Create account on [Render](https://render.com)
+3. Connect your GitHub repository
+4. Render will auto-detect `render.yaml` and deploy:
+   - Web service (Django)
+   - PostgreSQL database
+   - Redis instance
+   - Celery worker
+   - Celery beat scheduler
+
+**Complete Guide:** See [DEPLOYMENT_GUIDE.md](DEPLOYMENT_GUIDE.md)
+
+### Swagger API Documentation
+
+Once deployed, access interactive API documentation:
+
+- **Swagger UI:** `https://your-app.onrender.com/swagger/`
+- **ReDoc:** `https://your-app.onrender.com/redoc/`
+- **OpenAPI Schema:** `https://your-app.onrender.com/swagger.json`
+
 ### Pre-Deployment Checklist
 
 - [ ] Set `DEBUG=False` in settings
@@ -478,6 +505,22 @@ Celery Workers (Background)
 | Development | True | SQLite | Local Redis | 1 |
 | Staging | False | PostgreSQL | Redis Cluster | 2-4 |
 | Production | False | PostgreSQL HA | Redis Sentinel | 4-8 |
+
+### Environment Variables
+
+Copy `env.example` to `.env` and configure:
+
+```bash
+cp env.example .env
+# Edit .env with your values
+```
+
+Required variables:
+- `SECRET_KEY` - Django secret key
+- `DEBUG` - Set to False in production
+- `ALLOWED_HOSTS` - Your domain(s)
+- `DATABASE_URL` - PostgreSQL connection string
+- `REDIS_URL` - Redis connection string
 
 ---
 
@@ -595,6 +638,8 @@ grep -r "RATELIMIT" settings.py
 
 | Document | Description |
 |----------|-------------|
+| [DEPLOYMENT_GUIDE.md](DEPLOYMENT_GUIDE.md) | Complete Render deployment guide with Celery and Swagger |
+| [TESTING_GUIDE.md](TESTING_GUIDE.md) | Production testing procedures and benchmarks |
 | [IP_TRACKING_GUIDE.md](IP_TRACKING_GUIDE.md) | Comprehensive implementation guide with best practices |
 | [IMPLEMENTATION_STATUS.md](IMPLEMENTATION_STATUS.md) | Detailed task completion status and testing |
 | [QUICK_REFERENCE.md](QUICK_REFERENCE.md) | Quick command reference and troubleshooting |
