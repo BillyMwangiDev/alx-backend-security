@@ -3,6 +3,7 @@ services:
   - type: web
     name: ip-tracking-web
     runtime: python
+    region: frankfurt
     plan: free
     buildCommand: "pip install -r ip_tracking_project/requirements.txt && cd ip_tracking_project && python manage.py collectstatic --no-input"
     startCommand: "cd ip_tracking_project && gunicorn wsgi:application"
@@ -82,6 +83,7 @@ services:
   # Redis Key Value Store
   - type: redis
     name: ip-tracking-redis
+    region: frankfurt
     plan: free
     maxmemoryPolicy: allkeys-lru
     ipAllowList: []
@@ -89,6 +91,7 @@ services:
 databases:
   # PostgreSQL Database
   - name: ip-tracking-db
+    region: frankfurt
     plan: free
     databaseName: ip_tracking_db
     user: ip_tracking_user
