@@ -5,8 +5,9 @@ services:
     runtime: python
     region: frankfurt
     plan: free
-    buildCommand: "pip install -r ip_tracking_project/requirements.txt && cd ip_tracking_project && python manage.py collectstatic --no-input"
-    startCommand: "cd ip_tracking_project && gunicorn wsgi:application"
+    buildCommand: "pip install -r ip_tracking_project/requirements.txt && python ip_tracking_project/manage.py collectstatic --no-input"
+    preDeployCommand: "python ip_tracking_project/manage.py migrate --no-input"
+    startCommand: "gunicorn --chdir ip_tracking_project wsgi:application"
     envVars:
       - key: PYTHON_VERSION
         value: 3.11.0
